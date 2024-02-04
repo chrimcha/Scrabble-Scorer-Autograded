@@ -18,48 +18,56 @@ function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
    word = word.split("");
    // console.log(word);
-	let letterPoints = "";
+	let letterPoints = [];
+   let totalPoints = 0;
 
 	for (let i = 0; i < word.length; i++) {
 
 	  for (const pointValue in oldPointStructure) {
  
 		 if (oldPointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+         letterPoints.push(pointValue);
+         // console.log(totalPoints);
+			// letterPoints += `Points for '${word[i]}': ${pointValue}\n`
 		 }
- 
 	  }
 	}
-	return console.log(letterPoints);
+
+   // console.log(letterPoints);
+   
+   letterPoints.forEach( num => {
+      num = Number(num);
+      totalPoints += num;
+   })
+
+	return totalPoints;
  }
 
-word = "";
-
- const simplePointStructure = {
-   1: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
- };
+//  const simplePointStructure = {
+//    1: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+//  };
 
  function simplePointScorer(word) {
 	word = word.toUpperCase();
    word = word.split("");
    // console.log(word);
-	let letterPoints = "";
+	// let letterPoints = word.length;
+   // console.log(word);
 
-	for (let i = 0; i < word.length; i++) {
+	// for (let i = 0; i < word.length; i++) {
 
-	  for (const pointValue in simplePointStructure) {
+	//   for (const pointValue in simplePointStructure) {
  
-		 if (simplePointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
-		 }
+	// 	 if (simplePointStructure[pointValue].includes(word[i])) {
+	// 		letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+	// 	 }
  
-	  }
-	}
-	return console.log(letterPoints);
+	//   }
+	// }
+	// return letterPoints;
+   return word.length;
  }
  
-word = "";
-
  const vowelPointStructure = {
    1: ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'],
    3: ['A', 'E', 'I', 'O', 'U']
@@ -69,19 +77,29 @@ word = "";
 	word = word.toUpperCase();
    word = word.split("");
    // console.log(word);
-	let letterPoints = "";
+	let letterPoints = [];
+   let totalPoints = 0;
 
 	for (let i = 0; i < word.length; i++) {
 
 	  for (const pointValue in vowelPointStructure) {
  
 		 if (vowelPointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+         letterPoints.push(pointValue);
+			// letterPoints += `Points for '${word[i]}': ${pointValue}\n`
 		 }
  
 	  }
 	}
-	return console.log(letterPoints);
+
+	// console.log(letterPoints);
+   
+   letterPoints.forEach( num => {
+      num = Number(num);
+      totalPoints += num;
+   })
+
+	return totalPoints;
  }
 
  const pointScoringFunctions = [simplePointScorer, vowelPointScorer, oldScrabbleScorer];
@@ -93,13 +111,14 @@ function initialPrompt() {
    console.log("Let's play some scrabble! \n");
    let question = input.question("Enter a word to score: ");
    word = question;
-   console.log("Current word: ", word);
+   // console.log("Current word: ", word);
 };
 
 let simpleScorer = {
    name: "Simple Score",
    description: "Each letter is worth 1 point.",
    scoringFunction: function () {return simplePointScorer(word)}
+      //{return word.length}
 };
 
 let vowelBonusScorer = {
@@ -117,25 +136,27 @@ let scrabbleScorer = {
 const scoringAlgorithms = [simpleScorer, vowelBonusScorer, scrabbleScorer];
 
 function scorerPrompt() {
-   console.log("0 - Scoring Type: ", scoringAlgorithms[0].name);
-   console.log("1 - Scoring Type: ", scoringAlgorithms[1].name);
-   console.log("2 - Scoring Type: ", scoringAlgorithms[2].name);
+   console.log(`\n0 - Scoring Type: ${scoringAlgorithms[0].name}:  \t${scoringAlgorithms[0].description}`);
+   console.log(`1 - Scoring Type: ${scoringAlgorithms[1].name}:  \t${scoringAlgorithms[1].description}`);
+   console.log(`2 - Scoring Type: ${scoringAlgorithms[2].name}:\t \t${scoringAlgorithms[2].description}`);
 
-   let selectAScorer = input.question("Select a scoring algorithm from the list above! (Select: 0, 1, or 2) ");
+   let selectAScorer = input.question("\nSelect a scoring algorithm from the list above! (Enter: 0, 1, or 2) ");
    let selectedNumber = Number(selectAScorer);
 
    if (selectedNumber === 0) {
-      return console.log(`Score for "${word}":`, scoringAlgorithms[0].scoringFunction(word));
+      return console.log(`Score for '${word}': ${scoringAlgorithms[0].scoringFunction(word)}`);
    } else if (selectedNumber === 1) {
-      return console.log(`Score for "${word}":`, scoringAlgorithms[1].scoringFunction(word));
+      return console.log(`Score for '${word}': ${scoringAlgorithms[1].scoringFunction(word)}`);
    } else if (selectedNumber === 2) {
-      return console.log(`Score for "${word}":`, scoringAlgorithms[2].scoringFunction(word));
+      return console.log(`Score for '${word}': ${scoringAlgorithms[2].scoringFunction(word)}`);
    } else {
-      return "Invalid Selection";
+      console.log("\nInvalid Selection: Try Again!\n");
+      return runProgram();
    }
 }
-word = "pineapple"
-console.log(scoringAlgorithms[2].scoringFunction());
+
+// word = "pineapple"
+// console.log(scoringAlgorithms[0].scoringFunction());
 ///NEED TO FIGURE OUT WHY scoringFunction is undefined
 
 // console.log(scoringAlgorithms[0].scoringFunction(input.question("Enter a word to score: ")));
@@ -146,9 +167,6 @@ let newPointStructure;
 
 function runProgram() {
    initialPrompt();
-   // simplePointScorer(word);
-   // vowelPointScorer(word);
-   // oldScrabbleScorer(word);
    scorerPrompt();
 }
 
