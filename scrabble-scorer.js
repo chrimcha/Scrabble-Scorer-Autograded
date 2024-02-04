@@ -2,15 +2,46 @@
 
 const input = require("readline-sync");
 
+// const oldPointStructure = {
+//   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
+//   2: ['D', 'G'],
+//   3: ['B', 'C', 'M', 'P'],
+//   4: ['F', 'H', 'V', 'W', 'Y'],
+//   5: ['K'],
+//   8: ['J', 'X'],
+//   10: ['Q', 'Z']
+// };
+
 const oldPointStructure = {
-  1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
-  2: ['D', 'G'],
-  3: ['B', 'C', 'M', 'P'],
-  4: ['F', 'H', 'V', 'W', 'Y'],
-  5: ['K'],
-  8: ['J', 'X'],
-  10: ['Q', 'Z']
+   A: 1,
+   B: 3,
+   C: 3,
+   D: 2,
+   E: 1,
+   F: 4,
+   G: 2,
+   H: 4,
+   I: 1,
+   J: 8,
+   K: 5,
+   L: 1,
+   M: 3,
+   N: 1,
+   O: 1,
+   P: 3,
+   Q: 10,
+   R: 1,
+   S: 1,
+   T: 1,
+   U: 1,
+   V: 4,
+   W: 4,
+   X: 8,
+   Y: 4,
+   Z: 10 
 };
+
+
 
 let word = '';
 
@@ -161,35 +192,34 @@ function scorerPrompt() {
 
 // console.log(scoringAlgorithms[0].scoringFunction(input.question("Enter a word to score: ")));
 
-function transform() {};
+function transform(object) {
+   return object.key();
+   // for (item in object) {};
+
+
+      // // console.log(object);
+      // // console.log(object[item][0]); // this grabs index 0 for property in object
+      // for (let i = 0; i <= 27; i++){
+      //    // let upperToLowerCase = 
+      //    // upperToLowerCase;
+      //    String(object[item]).toLowerCase;
+      // }
+
+      // let upperToLowerCase = String(object[item]).toLowerCase;
+      // console.log(upperToLowerCase);
+
+   // }
+};
+
+// oldPointStructure[1] = String(oldPointStructure[1]);
+// oldPointStructure[1] = oldPointStructure[1].replaceAll(',', '');
+// // let upperToLowerCase = oldPointStructure[1];
+// console.log(oldPointStructure[1].toLowerCase());
+
+console.log(transform(oldPointStructure));
 
 let newPointStructure = {
-   A: 1,
-   B: 3,
-   C: 3,
-   D: 2,
-   E: 1,
-   F: 4,
-   G: 2,
-   H: 4,
-   I: 1,
-   J: 8,
-   K: 5,
-   L: 1,
-   M: 3,
-   N: 1,
-   O: 1,
-   P: 3,
-   Q: 10,
-   R: 1,
-   S: 1,
-   T: 1,
-   U: 1,
-   V: 4,
-   W: 4,
-   X: 8,
-   Y: 4,
-   Z: 10
+
 };
 
 // console.log("Scrabble scoring values for");
