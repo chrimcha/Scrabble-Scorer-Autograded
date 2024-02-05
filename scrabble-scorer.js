@@ -38,7 +38,7 @@ const oldPointStructure = {
    W: 4,
    X: 8,
    Y: 4,
-   Z: 10 
+   Z: 10,
 };
 
 
@@ -196,6 +196,8 @@ let vowelBonusScorer =  function(word) {
 };
 
 let newPointStructure = transform(oldPointStructure);
+newPointStructure[' '] = 0;
+// console.log(newPointStructure);
 
 let scrabbleScorer = function(word) {
 	word = word.toLowerCase();
@@ -250,7 +252,7 @@ let scrabble = {
    scoringFunction: function () {return scrabbleScorer(word)}
 };
 
-const scoringAlgorithms = [simpleScore, bonusVowels, scrabble];
+const scoringAlgorithms = [simpleScore, bonusVowels, newPointStructure];
 
 function scorerPrompt() {
    console.log(`\n0 - Scoring Type: ${scoringAlgorithms[0].name}:  \t${scoringAlgorithms[0].description}`);
@@ -267,7 +269,7 @@ function scorerPrompt() {
    } else if (selectedNumber === 2) {
       return console.log(`Score for '${word}': ${scoringAlgorithms[2].scoringFunction(word)}`);
    } else {
-      console.log("\nInvalid Selection: Try Again!\n");
+      console.log("\n-----Invalid Selection: Try Again!-----\n");
       return runProgram();
    }
 }
