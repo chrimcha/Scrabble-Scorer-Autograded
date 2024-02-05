@@ -237,22 +237,22 @@ let scrabbleScorer = function(word) {
 let simpleScore = {
    name: "Simple Score",
    description: "Each letter is worth 1 point.",
-   scoringFunction: function () {return simpleScorer(word)}
+   scorerFunction: simpleScorer
 };
 
 let bonusVowels = {
    name: "Bonus Vowels",
    description: "Vowels are 3 pts, consonants are 1 pt.",
-   scoringFunction: function () {return vowelBonusScorer(word)}
+   scorerFunction: vowelBonusScorer
 };
 
 let scrabble = {
    name: "Scrabble",
    description: "The traditional scoring algorithm.",
-   scoringFunction: function () {return scrabbleScorer(word)}
+   scorerFunction: scrabbleScorer
 };
 
-const scoringAlgorithms = [simpleScore, bonusVowels, newPointStructure];
+const scoringAlgorithms = [simpleScore, bonusVowels, scrabble];
 
 function scorerPrompt() {
    console.log(`\n0 - Scoring Type: ${scoringAlgorithms[0].name}:  \t${scoringAlgorithms[0].description}`);
@@ -263,20 +263,20 @@ function scorerPrompt() {
    let selectedNumber = Number(selectAScorer);
 
    if (selectedNumber === 0) {
-      return console.log(`Score for '${word}': ${scoringAlgorithms[0].scoringFunction(word)}`);
+      return console.log(`Score for '${word}': ${scoringAlgorithms[0].scorerFunction(word)}`);
    } else if (selectedNumber === 1) {
-      return console.log(`Score for '${word}': ${scoringAlgorithms[1].scoringFunction(word)}`);
+      return console.log(`Score for '${word}': ${scoringAlgorithms[1].scorerFunction(word)}`);
    } else if (selectedNumber === 2) {
-      return console.log(`Score for '${word}': ${scoringAlgorithms[2].scoringFunction(word)}`);
+      return console.log(`Score for '${word}': ${scoringAlgorithms[2].scorerFunction(word)}`);
    } else {
       console.log("\n-----Invalid Selection: Try Again!-----\n");
       return runProgram();
    }
 }
 
-function transform(object) {
-   for (items in object) {
-      let arrayOfKeysValues = Object.entries(object);
+function transform(pointStructureObject) {
+   for (items in pointStructureObject) {
+      let arrayOfKeysValues = Object.entries(pointStructureObject);
 
       let newArrayLowerCaseKeys = arrayOfKeysValues.map(function(a) { 
           a[0] = a[0].toLowerCase();
@@ -284,9 +284,9 @@ function transform(object) {
           } 
       );
 
-      const newObj  = Object.fromEntries(newArrayLowerCaseKeys);
+      const newPointStructureObj  = Object.fromEntries(newArrayLowerCaseKeys);
 
-      return newObj;
+      return newPointStructureObj;
    }
 };
 
