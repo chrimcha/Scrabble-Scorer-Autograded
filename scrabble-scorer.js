@@ -197,42 +197,45 @@ let vowelBonusScorer =  function(word) {
 
 let newPointStructure = transform(oldPointStructure);
 
-let scrabbleScorer = function(word, newPointStructure) {
+let scrabbleScorer = function(word) {
 	word = word.toLowerCase();
    word = word.split("");
-   console.log(word);
+   // console.log(word);
+   // console.log(newPointStructure);
+   // console.log(Object.keys(newPointStructure));
+   // console.log(Object.keys(newPointStructure)[0]);
+   // console.log(newPointStructure["a"]);
 
    let letterPoints = [];
    let totalPoints = 0;
-
-	for (let i = 0; i < word.length; i++) {
-
-	  for (const items in newPointStructure) {
  
-		 if (newPointStructure === word[i]) {
-         letterPoints.push(newPointStructure[i]);
-         console.log(newPointStructure[i]);
-		 } 
+	for (let i = 0; i < word.length; i++) {
+ 
+	  for (const keys in newPointStructure) {
+        
+        if (keys === (word[i])) {
+            letterPoints.push(newPointStructure[word[i]]);
+            // letterPoints += `Points for '${word[i]}': ${newPointStructure[word[i]]}\n`
+        }
 
 	  }
 
 	}
- 
+    
    letterPoints.forEach( num => {
-      num = Number(num);
-      totalPoints += num;
+        num = Number(num);
+        totalPoints += num;
    })
 
 	return totalPoints;
 };
 
-console.log(scrabbleScorer('foo', newPointStructure));
+// console.log(scrabbleScorer('foo', newPointStructure));
 
 let simpleScore = {
-   // name: "Simple Score",
-   // description: "Each letter is worth 1 point.",
+   name: "Simple Score",
+   description: "Each letter is worth 1 point.",
    scoringFunction: function () {return simpleScorer(word)}
-      //{return word.length}
 };
 
 let bonusVowels = {
@@ -247,7 +250,7 @@ let scrabble = {
    scoringFunction: function () {return scrabbleScorer(word)}
 };
 
-const scoringAlgorithms = [simpleScore, vowelPointStructure, newPointStructure];
+const scoringAlgorithms = [simpleScore, bonusVowels, scrabble];
 
 function scorerPrompt() {
    console.log(`\n0 - Scoring Type: ${scoringAlgorithms[0].name}:  \t${scoringAlgorithms[0].description}`);
@@ -285,7 +288,7 @@ function transform(object) {
    }
 };
 
-// console.log(oldPointStructure);
+// console.log(newPointStructure);
 // console.log(transform(oldPointStructure));
 
 // let newPointStructure = transform(oldPointStructure);
